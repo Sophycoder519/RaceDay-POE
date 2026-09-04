@@ -1,0 +1,50 @@
+name: CI - Validate Part 1 Docs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Verify docs folder exists
+        run: |
+          if [ ! -d "docs" ]; then
+            echo "docs folder is missing"
+            exit 1
+          fi
+          echo "docs folder found"
+
+      - name: Verify ERD file
+        run: |
+          if ! ls docs/*.png docs/*.pdf 1> /dev/null 2>&1; then
+            echo "ERD (PNG/PDF) not found in docs"
+            exit 1
+          fi
+          echo "ERD file found"
+
+      - name: Verify Endpoint Plan
+        run: |
+          if ! ls docs/*endpoint*.md docs/*endpoint*.pdf 1> /dev/null 2>&1; then
+            echo "Endpoint Plan not found in docs"
+            exit 1
+          fi
+          echo "Endpoint Plan found"
+
+      - name: Verify SQL Script
+        run: |
+          if ! ls docs/*.sql 1> /dev/null 2>&1; then
+            echo "SQL Script not found in docs"
+            exit 1
+          fi
+          echo "SQL Script found"
+
+      - name: Final Success
+        run: echo "All Part 1 documents are present"
