@@ -24,28 +24,31 @@ jobs:
 
       - name: Verify ERD file
         run: |
-          if ! ls docs/*.png docs/*.pdf 1> /dev/null 2>&1; then
-            echo "ERD (PNG/PDF) not found in docs"
+          if [ -f "docs/erd.pdf" ]; then
+            echo "ERD file found"
+          else
+            echo "ERD (PDF) not found in docs"
+            ls -la docs/
             exit 1
           fi
-          echo "ERD file found"
 
       - name: Verify Endpoint Plan
         run: |
-          if ! ls docs/*endpoint*.md docs/*endpoint*.pdf 1> /dev/null 2>&1; then
+          if [ -f "docs/endpoint-plan.md" ]; then
+            echo "Endpoint Plan found"
+          else
             echo "Endpoint Plan not found in docs"
             exit 1
           fi
-          echo "Endpoint Plan found"
 
       - name: Verify SQL Script
         run: |
-          if ! ls docs/*.sql 1> /dev/null 2>&1; then
+          if [ -f "docs/script.sql" ]; then
+            echo "SQL Script found"
+          else
             echo "SQL Script not found in docs"
             exit 1
           fi
-          echo "SQL Script found"
 
       - name: Final Success
         run: echo "All Part 1 documents are present"
-          
