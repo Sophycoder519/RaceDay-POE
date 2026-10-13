@@ -21,14 +21,41 @@ namespace RaceDayAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Category>()
+                .Property(c => c.Distance)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<Category>()
+                .Property(c => c.EntryFee)
+                .HasPrecision(10, 2);
+
             modelBuilder.Entity<Enrolment>()
                 .HasIndex(e => new { e.ParticipantID, e.EventID })
                 .IsUnique();
 
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Participant)
+                .WithMany()
+                .HasForeignKey(e => e.ParticipantID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Event)
+                .WithMany()
+                .HasForeignKey(e => e.EventID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Category)
+                .WithMany()
+                .HasForeignKey(e => e.CategoryID)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Result>()
                 .HasOne(r => r.Enrolment)
                 .WithOne(e => e.Result)
-                .HasForeignKey<Result>(r => r.EnrolmentID);
+                .HasForeignKey<Result>(r => r.EnrolmentID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
