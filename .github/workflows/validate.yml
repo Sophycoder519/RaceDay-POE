@@ -1,4 +1,5 @@
-name: CI - Validate Part 1 Docs
+
+name: CI - Build and Test RaceDay API
 
 on:
   push:
@@ -7,48 +8,34 @@ on:
     branches: [ main ]
 
 jobs:
-  check-docs:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Verify docs folder exists
-        run: |
-          if [ ! -d "docs" ]; then
-            echo "docs folder is missing"
-            exit 1
-          fi
-          echo "docs folder found"
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
 
-      - name: Verify ERD file
+      - name: Verify Part 1 docs
         run: |
-          if [ -f "docs/erd.pdf" ]; then
-            echo "ERD file found"
-          else
-            echo "ERD (PDF) not found in docs"
-            ls -la docs/
-            exit 1
-          fi
+          [ -d "docs" ] || (echo "docs folder missing" && exit 1)
+          [ -f "docs/erd.pdf" ] || (echo "ERD missing" && exit 1)
+          [ -f "docs/endpoint-plan.md" ] || (echo "Endpoint Plan missing" && exit 1)
+          [ -f "docs/script.sql" ] || (echo "SQL Script missing" && exit 1)
+          echo "Part 1 docs present"
 
-      - name: Verify Endpoint Plan
-        run: |
-          if [ -f "docs/endpoint-plan.md" ]; then
-            echo "Endpoint Plan found"
-          else
-            echo "Endpoint Plan not found in docs"
-            exit 1
-          fi
+      - name: Restore
+        run: dotnet restore RaceDayAPI/RaceDayAPI.csproj
 
-      - name: Verify SQL Script
-        run: |
-          if [ -f "docs/script.sql" ]; then
-            echo "SQL Script found"
-          else
-            echo "SQL Script not found in docs"
-            exit 1
-          fi
+      - name: Build
+        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --configuration Release --verbosity normal
 
       - name: Final Success
-        run: echo "All Part 1 documents are present"
+        run: echo "All checks passed!"
