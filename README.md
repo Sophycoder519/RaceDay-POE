@@ -1,23 +1,56 @@
-# RaceDay Event Management System - Part 1
-
-## System Overview
-RaceDay is a full-stack event management platform for the South African road running, walking, and cycling community.
+A full-stack platform for South African road running, walking, and cycling events.
 
 ## Roles
-- **Organiser**: Creates events, manages categories, captures results, and views enrolments.
-- **Participant**: Browses events, enters events, and tracks personal results.
+- **Organiser**: Create/manage events, categories, capture results, view enrolments
+- **Participant**: Browse events, enter events, view personal results
 
 ## Project Structure
-- `/docs/erd.png` - Entity Relationship Diagram
-- `/docs/endpoint-plan.md` - API endpoint specification
-- `/docs/script.sql` - SQL schema and seed data
-- `/.github/workflows/validate.yml` - CI/CD workflow
+RaceDay-POE/
+├── RaceDayAPI/ # Part 2 - RESTful API (ASP.NET Core 8)
+│ ├── Controllers/ # API endpoints
+│ ├── Models/ # EF Core entities
+│ ├── DTOs/ # Data transfer objects
+│ ├── Services/ # JwtService
+│ ├── Data/ # DbContext
+│ └── Migrations/ # EF Core migrations
+├── RaceDayAPI.Tests/ # xUnit unit tests
+├── docs/ # Part 1 planning documents
+│ ├── erd.pdf
+│ ├── endpoint-plan.md
+│ └── script.sql
+└── .github/workflows/ # CI/CD pipeline
 
-## Database Setup
-1. Open SSMS and run `docs/script.sql` against the `ST10479223` database.
 
-## Video Presentation
-[Watch the walkthrough here](https://youtu.be/your-link-here)
 
-## AI Disclosure
-This planning was drafted with the assistance of an AI tool for structuring and brainstorming. All final decisions were personally reviewed and implemented.
+## Setup Instructions
+
+### Prerequisites
+- .NET 8.0 SDK
+- SQL Server or LocalDB
+
+### Running the API
+```bash
+cd RaceDayAPI
+dotnet restore
+dotnet ef database update
+dotnet run
+Open browser to: http://localhost:5211/swagger
+
+Running Tests
+bash
+cd RaceDayAPI
+dotnet test
+Authentication
+The API uses JWT Bearer tokens. Register or login via /api/Auth/register and /api/Auth/login to receive a token. Use the token in the Authorization: Bearer {token} header for protected endpoints.
+
+CI/CD Status
+https://part2-ci-screenshot.png/
+
+The GitHub Actions workflow builds the API and runs 10 unit tests on every push.
+
+Video Presentation
+Watch Part 2 walkthrough
+
+AI Disclosure
+This project was developed with AI assistance for structuring and debugging. All final code was reviewed, tested, and implemented by me.
+
