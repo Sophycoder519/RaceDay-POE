@@ -3,7 +3,7 @@ using RaceDayAPI.Models;
 
 namespace RaceDayAPI.Data
 {
-    public class RaceDayDbContext : DbContext
+    public class RaceDayDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public RaceDayDbContext(DbContextOptions<RaceDayDbContext> options) : base(options)
         {
