@@ -21,6 +21,10 @@ namespace RaceDayAPI.Models
         [Required]
         public string Location { get; set; } = string.Empty;
 
+        public decimal? Distance { get; set; }
+
+        public string? EventType { get; set; }
+
         public int? MaxParticipants { get; set; }
 
         public string Status { get; set; } = "Upcoming";
