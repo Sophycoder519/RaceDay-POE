@@ -3,7 +3,7 @@ using RaceDayAPI.Models;
 
 namespace RaceDayAPI.Data
 {
-    public class RaceDayDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class RaceDayDbContext : DbContext
     {
         public RaceDayDbContext(DbContextOptions<RaceDayDbContext> options) : base(options)
         {
@@ -28,6 +28,10 @@ namespace RaceDayAPI.Data
             modelBuilder.Entity<Category>()
                 .Property(c => c.EntryFee)
                 .HasPrecision(10, 2);
+
+            modelBuilder.Entity<Event>()
+                .Property(e => e.Distance)
+                .HasPrecision(6, 2);
 
             modelBuilder.Entity<Enrolment>()
                 .HasIndex(e => new { e.ParticipantID, e.EventID })
