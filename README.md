@@ -64,7 +64,3 @@ The GitHub Actions workflow builds the API and runs 10 unit tests on every push.
 ## Video Presentation
 
 [Watch Part 2 walkthrough](https://youtu.be/your-part2-video-link)
-
-## AI Disclosure
-
-This project was developed with AI assistance for structuring and debugging. All final code was reviewed, tested, and implemented by me.
