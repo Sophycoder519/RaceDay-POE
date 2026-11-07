@@ -37,7 +37,7 @@ namespace RaceDayAPI.Tests
         public async Task GetAllEvents_ReturnsOk()
         {
             var db = GetInMemoryDb();
-            var controller = new EventsController(db);
+            var controller = new EventsController(db, null!);
 
             var result = await controller.GetAllEvents();
 
@@ -48,7 +48,7 @@ namespace RaceDayAPI.Tests
         public async Task GetEvent_WithInvalidId_ReturnsNotFound()
         {
             var db = GetInMemoryDb();
-            var controller = new EventsController(db);
+            var controller = new EventsController(db, null!);
 
             var result = await controller.GetEvent(999);
 
@@ -65,7 +65,7 @@ namespace RaceDayAPI.Tests
             db.Organisers.Add(new Organiser { UserID = user.UserID, OrganisationName = "Test" });
             await db.SaveChangesAsync();
 
-            var controller = new EventsController(db);
+            var controller = new EventsController(db, null!);
             SetupUserContext(controller, user.UserID, "Organiser");
 
             var result = await controller.CreateEvent(new CreateEventDto
@@ -87,7 +87,7 @@ namespace RaceDayAPI.Tests
             db.Users.Add(user);
             await db.SaveChangesAsync();
 
-            var controller = new EventsController(db);
+            var controller = new EventsController(db, null!);
             SetupUserContext(controller, user.UserID, "Participant");
 
             var result = await controller.CreateEvent(new CreateEventDto
