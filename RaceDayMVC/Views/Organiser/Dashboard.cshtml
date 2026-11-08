@@ -1,6 +1,22 @@
-﻿namespace RaceDayMVC.Views.Organiser
-{
-    public class Dashboard
-    {
-    }
+﻿@{
+    ViewData["Title"] = "Organiser Dashboard";
 }
+
+<div class="container mt-4">
+    <h2>Organiser Dashboard</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white text-center p-4">
+                <h3>@ViewBag.EventCount</h3>
+                <p>Total Events Created</p>
+                <a asp-action="Events" class="btn btn-light mt-2">Manage Events</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white text-center p-4">
+                <h3>0</h3>
+                <p>Total Enrolments</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,51 @@
-﻿namespace RaceDayMVC.Views.Account
-{
-    public class Register
-    {
-    }
+﻿@model RaceDayMVC.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
 }
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Create a RaceDay Account</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">I am a:</label>
+                            <select asp-for="Role" class="form-select">
+                                <option value="Participant">Participant (Runner/Walker/Cyclist)</option>
+                                <option value="Organiser">Organiser (Event Host)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input asp-for="FullName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            <input asp-for="Email" type="email" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" required minlength="6" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <p>Already have an account? <a asp-action="Login">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
