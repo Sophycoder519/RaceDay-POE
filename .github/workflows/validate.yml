@@ -1,33 +1,19 @@
 name: CI - Build and Test RaceDay
-
-on:
-  push:
-    branches: [ main ]
-
+on: [push]
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
             8.0.x
             9.0.x
-
-      - name: Restore API
-        run: dotnet restore RaceDayAPI/RaceDayAPI.csproj
-
       - name: Build API
-        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --no-restore --configuration Release
-
+        run: dotnet build RaceDayAPI/RaceDayAPI.csproj
       - name: Test API
-        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --no-restore --configuration Release
-
-      - name: Restore MVC
-        run: dotnet restore RaceDayMVC/RaceDayMVC.csproj
-
+        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj
       - name: Build MVC
-        run: dotnet build RaceDayMVC/RaceDayMVC.csproj --no-restore --configuration Release
+        run: dotnet build RaceDayMVC/RaceDayMVC.csproj
