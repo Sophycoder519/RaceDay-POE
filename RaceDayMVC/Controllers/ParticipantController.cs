@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RaceDayMVC.Models;
 using RaceDayMVC.Services;
 
 namespace RaceDayMVC.Controllers
@@ -16,14 +17,14 @@ namespace RaceDayMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _apiService.GetAsync<List<dynamic>>("api/events");
-            return View(events ?? new List<dynamic>());
+            var events = await _apiService.GetAsync<List<EventModel>>("api/events");
+            return View(events ?? new List<EventModel>());
         }
 
         public async Task<IActionResult> Details(int id)
         {
             if (!IsParticipant()) return RedirectToAction("Login", "Account");
-            var ev = await _apiService.GetAsync<dynamic>($"api/events/{id}");
+            var ev = await _apiService.GetAsync<EventModel>($"api/events/{id}");
             return View(ev);
         }
 
@@ -33,7 +34,7 @@ namespace RaceDayMVC.Controllers
             if (!IsParticipant()) return RedirectToAction("Login", "Account");
             var payload = new { EventID = eventId, CategoryID = categoryId };
             var response = await _apiService.PostAsync<object, dynamic>("api/enrolments", payload);
-            return RedirectToAction("MyEnrolments");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> MyEnrolments()
@@ -55,25 +56,6 @@ namespace RaceDayMVC.Controllers
             if (HttpContext.Session.GetString("JwtToken") == null) return RedirectToAction("Login", "Account");
             var profile = await _apiService.GetAsync<dynamic>("api/user/profile");
             return View(profile);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateProfile(string fullName, string phoneNumber)
-        {
-            if (!IsParticipant()) return RedirectToAction("Login", "Account");
-            var payload = new { FullName = fullName, PhoneNumber = phoneNumber };
-            await _apiService.PutAsync("api/user/profile", payload);
-            return RedirectToAction("Profile");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadProfilePicture(IFormFile profilePic)
-        {
-            if (profilePic != null && profilePic.Length > 0)
-            {
-                await _apiService.UploadFileAsync("api/user/upload-profile-picture", profilePic);
-            }
-            return RedirectToAction("Profile");
         }
     }
 }

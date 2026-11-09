@@ -1,25 +1,24 @@
-@model List<dynamic>
+﻿@model List<RaceDayMVC.Models.EventModel>
 @{
     ViewData["Title"] = "Upcoming Events";
 }
+
 <div class="container mt-4">
     <h2 class="text-success font-weight-bold">Upcoming Events</h2>
     <div class="row mt-3">
-        @foreach (var ev in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card shadow">
-                    @if (ev.bannerUrl != null)
-                    {
-                        <img src="@ev.bannerUrl" class="card-img-top" style="height:200px; object-fit:cover;" />
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title">@ev.title</h5>
-                        <p class="card-text text-muted">@ev.location | @ev.eventDate</p>
-                        <a asp-action="Details" asp-route-id="@ev.eventID" class="btn btn-primary w-100">View & Enrol</a>
+        @if(Model != null) {
+            @foreach (var ev in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@ev.Title</h5>
+                            <p class="card-text text-muted">@ev.Location | @ev.EventDate.ToString("dd MMM yyyy")</p>
+                            <a asp-action="Details" asp-route-id="@ev.EventID" class="btn btn-primary w-100">View & Enrol</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿@model List<dynamic>
+﻿@model List<RaceDayMVC.Models.EventModel>
 @{
     ViewData["Title"] = "My Events";
 }
@@ -14,29 +14,19 @@
             <tr>
                 <th>Title</th>
                 <th>Date</th>
-                <th>Location</th>
                 <th>Type</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var ev in Model)
-            {
-                <tr>
-                    <td>@ev.title</td>
-                    <td>@ev.eventDate</td>
-                    <td>@ev.eventType</td>
-                    <td>
-                        <form asp-action="UploadBanner" method="post" enctype="multipart/form-data" class="d-inline">
-                            <input type="hidden" name="eventId" value="@ev.eventID" />
-                            <input type="file" name="banner" class="form-control form-control-sm d-inline" style="width:130px;" required />
-                            <button type="submit" class="btn btn-sm btn-info">Img</button>
-                        </form>
-                        <a asp-action="Categories" asp-route-eventId="@ev.eventID" class="btn btn-sm btn-secondary">Cats</a>
-                        <a asp-action="Enrolments" asp-route-eventId="@ev.eventID" class="btn btn-sm btn-warning">Enrols</a>
-                        <a asp-action="Results" asp-route-eventId="@ev.eventID" class="btn btn-sm btn-success">Results</a>
-                    </td>
-                </tr>
+            @if(Model != null) {
+                @foreach (var ev in Model)
+                {
+                    <tr>
+                        <td>@ev.Title</td>
+                        <td>@ev.EventDate.ToString("dd MMM yyyy")</td>
+                        <td>@ev.EventType</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

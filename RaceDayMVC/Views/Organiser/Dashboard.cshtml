@@ -1,4 +1,4 @@
-﻿@model List<dynamic>
+﻿@model List<RaceDayMVC.Models.EventModel>
 @{
     ViewData["Title"] = "Organiser Dashboard";
 }
@@ -15,17 +15,19 @@
         </div>
     </div>
 
-    <h4 class="mt-5 mb-3">Upcoming Event Dates</h4>
+    <h4 class="mt-5 mb-3">Upcoming Events</h4>
     <ul class="list-group shadow">
-        @foreach (var ev in Model)
-        {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>@ev.title</strong> <br />
-                    <small class="text-muted">@ev.eventType | @ev.distance KM</small>
-                </div>
-                <span class="badge bg-primary rounded-pill">@ev.eventDate.ToString("dd MMM yyyy")</span>
-            </li>
+        @if(Model != null) {
+            @foreach(var ev in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>@ev.Title</strong> <br/>
+                        <small class="text-muted">@ev.EventType</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">@ev.EventDate.ToString("dd MMM yyyy")</span>
+                </li>
+            }
         }
     </ul>
 </div>

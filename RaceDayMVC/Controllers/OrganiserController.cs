@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RaceDayMVC.Models;
 using RaceDayMVC.Services;
 
 namespace RaceDayMVC.Controllers
@@ -12,26 +13,21 @@ namespace RaceDayMVC.Controllers
             _apiService = apiService;
         }
 
-        // Helper to check if user is Organiser
-        private bool IsOrganiser()
-        {
-            return HttpContext.Session.GetString("UserRole") == "Organiser";
-        }
+        private bool IsOrganiser() => HttpContext.Session.GetString("UserRole") == "Organiser";
 
         public async Task<IActionResult> Dashboard()
         {
             if (!IsOrganiser()) return RedirectToAction("Login", "Account");
-            var events = await _apiService.GetAsync<List<dynamic>>("api/events");
+            var events = await _apiService.GetAsync<List<EventModel>>("api/events");
             ViewBag.EventCount = events?.Count ?? 0;
-            return View(events ?? new List<dynamic>()); // Pass the list to the view
+            return View(events ?? new List<EventModel>());
         }
 
         public async Task<IActionResult> Events()
         {
             if (!IsOrganiser()) return RedirectToAction("Login", "Account");
-
-            var events = await _apiService.GetAsync<List<dynamic>>("api/events");
-            return View(events ?? new List<dynamic>());
+            var events = await _apiService.GetAsync<List<EventModel>>("api/events");
+            return View(events ?? new List<EventModel>());
         }
 
         [HttpGet]
@@ -42,19 +38,24 @@ namespace RaceDayMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEvent(object eventDto)
+        public async Task<IActionResult> CreateEvent(EventModel eventDto)
         {
             if (!IsOrganiser()) return RedirectToAction("Login", "Account");
 
-            // We use dynamic object to pass the form data to the API
-            var response = await _apiService.PostAsync<object, dynamic>("api/events", eventDto);
-
-            if (response != null)
+            var payload = new
             {
-                return RedirectToAction("Events");
-            }
+                Title = eventDto.Title,
+                Description = eventDto.Description,
+                EventDate = eventDto.EventDate,
+                Location = eventDto.Location,
+                EventType = eventDto.EventType,
+                MaxParticipants = 500
+            };
 
-            ViewBag.Error = "Failed to create event. Check your data.";
+            var response = await _apiService.PostAsync<object, dynamic>("api/events", payload);
+            if (response != null) return RedirectToAction("Events");
+
+            ViewBag.Error = "Failed to create event.";
             return View(eventDto);
         }
     }
