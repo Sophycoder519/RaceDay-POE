@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RaceDayAPI.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+494b70983694e41d2b113a795244a06f4b240bed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29d6912c3c35f6c9f65afcb2cb2e2fcd6302d679")]
 [assembly: System.Reflection.AssemblyProductAttribute("RaceDayAPI.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RaceDayAPI.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
