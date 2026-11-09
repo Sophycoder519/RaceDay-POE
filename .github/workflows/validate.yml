@@ -13,20 +13,15 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - name: Build API
-        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --configuration Release
+      - name: Restore Dependencies
+        run: dotnet restore RaceDayAPI/RaceDayAPI.sln
 
-      - name: Test API
-        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --configuration Release
+      - name: Build Solution
+        run: dotnet build RaceDayAPI/RaceDayAPI.sln --configuration Release --no-restore
 
-      # Note: If the MVC project needs .NET 9, we use the generic dotnet build 
-      # but ensure the runner has it. Using setup-dotnet for both:
-      - name: Setup .NET 9 for MVC
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '9.0.x'
-
-      - name: Build MVC Project
-        run: dotnet build RaceDayMVC/RaceDayMVC.csproj --configuration Release
+      - name: Run Tests
+        run: dotnet test RaceDayAPI/RaceDayAPI.sln --configuration Release --no-build --verbosity normal
