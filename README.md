@@ -63,3 +63,15 @@ The GitHub Actions workflow builds the API, runs 13 unit tests, and builds the M
 ## Video Presentation
 
 [Watch Part 2 walkthrough](https://youtu.be/exk_LM8JPog?si=pww9wGX2niy69Iwo)
+
+## Part 3: MVC Web Application
+
+This part of the project contains the MVC frontend application and the Docker configuration.
+
+### Docker Instructions
+
+To build and run the application using Docker:
+
+1. Navigate to the MVC project directory:
+   ```bash
+   cd RaceDayMVC
