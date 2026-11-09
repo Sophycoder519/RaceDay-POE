@@ -17,11 +17,17 @@ jobs:
             8.0.x
             9.0.x
 
-      - name: Restore Dependencies
-        run: dotnet restore RaceDayAPI/RaceDayAPI.sln
+      - name: Restore API
+        run: dotnet restore RaceDayAPI/RaceDayAPI.csproj
 
-      - name: Build Solution
-        run: dotnet build RaceDayAPI/RaceDayAPI.sln --configuration Release --no-restore
+      - name: Build API
+        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --no-restore --configuration Release
 
-      - name: Run Tests
-        run: dotnet test RaceDayAPI/RaceDayAPI.sln --configuration Release --no-build --verbosity normal
+      - name: Test API
+        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --no-restore --configuration Release
+
+      - name: Restore MVC
+        run: dotnet restore RaceDayMVC/RaceDayMVC.csproj
+
+      - name: Build MVC
+        run: dotnet build RaceDayMVC/RaceDayMVC.csproj --no-restore --configuration Release
