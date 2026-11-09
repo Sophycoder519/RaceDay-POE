@@ -1,22 +1,31 @@
-﻿@{
+﻿@model List<dynamic>
+@{
     ViewData["Title"] = "Organiser Dashboard";
 }
 
 <div class="container mt-4">
-    <h2>Organiser Dashboard</h2>
+    <h2 class="text-success font-weight-bold">Organiser Dashboard</h2>
     <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white text-center p-4">
-                <h3>@ViewBag.EventCount</h3>
-                <p>Total Events Created</p>
-                <a asp-action="Events" class="btn btn-light mt-2">Manage Events</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-success text-white text-center p-4">
-                <h3>0</h3>
-                <p>Total Enrolments</p>
+        <div class="col-md-6">
+            <div class="card bg-success text-white text-center p-4 shadow">
+                <h1>@ViewBag.EventCount</h1>
+                <h4>Total Events Created</h4>
+                <a asp-action="Events" class="btn btn-light mt-2 text-success font-weight-bold">Manage Events</a>
             </div>
         </div>
     </div>
+
+    <h4 class="mt-5 mb-3">Upcoming Event Dates</h4>
+    <ul class="list-group shadow">
+        @foreach (var ev in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>@ev.title</strong> <br />
+                    <small class="text-muted">@ev.eventType | @ev.distance KM</small>
+                </div>
+                <span class="badge bg-primary rounded-pill">@ev.eventDate.ToString("dd MMM yyyy")</span>
+            </li>
+        }
+    </ul>
 </div>

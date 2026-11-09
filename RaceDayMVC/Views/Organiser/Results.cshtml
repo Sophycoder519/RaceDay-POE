@@ -1,6 +1,28 @@
-﻿namespace RaceDayMVC.Views.Organiser
-{
-    public class Results
-    {
-    }
+﻿@model List<dynamic>
+@{
+    ViewData["Title"] = "Capture Results"; int eventId = ViewBag.EventId;
 }
+<div class="container mt-4">
+    <h2>Capture Results (Event ID: @eventId)</h2>
+    <a asp-action="Events" class="btn btn-secondary mb-3">Back to Events</a>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="EnterResult" method="post" class="row g-3">
+                <input type="hidden" name="eventId" value="@eventId" />
+                <div class="col-md-3"><input type="number" name="EnrolmentID" class="form-control" placeholder="Enrolment ID" required /></div>
+                <div class="col-md-2"><input type="text" name="FinishTime" class="form-control" placeholder="Time (hh:mm:ss)" required /></div>
+                <div class="col-md-2"><input type="number" name="OverallPosition" class="form-control" placeholder="Position" /></div>
+                <div class="col-md-3"><button type="submit" class="btn btn-success w-100">Capture</button></div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead><tr><th>Participant</th><th>Finish Time</th><th>Position</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr><td>@r.enrolment.participant.user.fullName</td><td>@r.finishTime</td><td>@r.overallPosition</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

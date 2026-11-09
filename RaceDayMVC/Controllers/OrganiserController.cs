@@ -21,12 +21,9 @@ namespace RaceDayMVC.Controllers
         public async Task<IActionResult> Dashboard()
         {
             if (!IsOrganiser()) return RedirectToAction("Login", "Account");
-
-            // We will get all events for now, you can filter by organiser later if needed
             var events = await _apiService.GetAsync<List<dynamic>>("api/events");
-
             ViewBag.EventCount = events?.Count ?? 0;
-            return View();
+            return View(events ?? new List<dynamic>()); // Pass the list to the view
         }
 
         public async Task<IActionResult> Events()

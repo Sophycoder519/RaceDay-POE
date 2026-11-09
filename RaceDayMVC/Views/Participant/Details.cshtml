@@ -1,0 +1,29 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Event Details";
+}
+<div class="container mt-4">
+    <h2>@Model.title</h2>
+    <p>@Model.description</p>
+    <h4>Categories</h4>
+    <table class="table">
+        <thead><tr><th>Name</th><th>Distance</th><th>Fee</th><th>Action</th></tr></thead>
+        <tbody>
+            @foreach (var cat in Model.categories)
+            {
+                <tr>
+                    <td>@cat.name</td>
+                    <td>@cat.distance KM</td>
+                    <td>R @cat.entryFee</td>
+                    <td>
+                        <form asp-action="Enrol" method="post">
+                            <input type="hidden" name="eventId" value="@Model.eventID" />
+                            <input type="hidden" name="categoryId" value="@cat.categoryID" />
+                            <button type="submit" class="btn btn-success btn-sm">Enrol Now</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

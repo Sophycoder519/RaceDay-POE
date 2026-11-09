@@ -20,37 +20,32 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-
+                        <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
                         @if (Context.Session.GetString("JwtToken") != null)
                         {
                             if (Context.Session.GetString("UserRole") == "Organiser")
                             {
-                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Organiser" asp-action="Dashboard">Organiser Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Organiser" asp-action="Dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Organiser" asp-action="Events">My Events</a></li>
                             }
                             else
                             {
-                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="Index">My Events</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="Index">Browse Events</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="MyEnrolments">My Enrolments</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="MyResults">My Results</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="Profile">Profile</a></li>
                             }
-                            <li class="nav-item">
-                                <span class="nav-link text-dark">Hello, @Context.Session.GetString("UserName")!</span>
-                            </li>
+                            <li class="nav-item"><span class="nav-link text-dark font-weight-bold">Hello, @Context.Session.GetString("UserName")!</span></li>
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-link nav-link text-dark" style="text-decoration:none;">Logout</button>
+                                    <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
                                 </form>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a></li>
                         }
                     </ul>
                 </div>

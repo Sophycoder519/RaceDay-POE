@@ -1,6 +1,22 @@
-﻿namespace RaceDayMVC.Views.Organiser
-{
-    public class Enrolments
-    {
-    }
+﻿@model List<dynamic>
+@{
+    ViewData["Title"] = "View Enrolments"; int eventId = ViewBag.EventId;
 }
+<div class="container mt-4">
+    <h2>Enrolments (Event ID: @eventId)</h2>
+    <a asp-action="Events" class="btn btn-secondary mb-3">Back to Events</a>
+    <table class="table table-striped">
+        <thead><tr><th>Name</th><th>Email</th><th>Category</th><th>Status</th></tr></thead>
+        <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td>@e.participant.user.fullName</td>
+                    <td>@e.participant.user.email</td>
+                    <td>@e.category.name</td>
+                    <td><span class="badge bg-info">@e.status</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,24 @@
+@model dynamic
+@{
+    ViewData["Title"] = "My Profile";
+}
+<div class="container mt-4">
+    <h2>My Profile</h2>
+    <div class="card p-4 shadow">
+        <h4 class="text-center">@Model.fullName</h4>
+        <p class="text-center text-muted">@Model.email</p>
+        <hr />
+        <h5>Update Profile Details</h5>
+        <form asp-action="UpdateProfile" method="post" class="mt-2">
+            <div class="mb-2"><label>Full Name</label><input type="text" name="fullName" value="@Model.fullName" class="form-control" required /></div>
+            <div class="mb-2"><label>Phone Number</label><input type="text" name="phoneNumber" value="@Model.phoneNumber" class="form-control" /></div>
+            <button type="submit" class="btn btn-success">Update Info</button>
+        </form>
+        <hr />
+        <h5>Upload Profile Picture</h5>
+        <form asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
+            <input type="file" name="profilePic" class="form-control mb-2" required />
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+        </form>
+    </div>
+</div>

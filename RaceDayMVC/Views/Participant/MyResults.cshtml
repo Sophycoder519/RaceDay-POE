@@ -1,0 +1,16 @@
+@model List<dynamic>
+@{
+    ViewData["Title"] = "My Results";
+}
+<div class="container mt-4">
+    <h2>My Race Results</h2>
+    <table class="table table-bordered">
+        <thead><tr><th>Event</th><th>Time</th><th>Overall Position</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr><td>@r.enrolment.event.title</td><td>@r.finishTime</td><td>@r.overallPosition</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
