@@ -56,10 +56,9 @@ dotnet test
 The API uses JWT Bearer tokens. Register or login via `/api/Auth/register` and `/api/Auth/login` to receive a token. Include the token in the `Authorization: Bearer {token}` header for protected endpoints.
 
 ## CI/CD Status
+![CI Green Build](screenshot.png)
 
-![CI Green Build](part2-ci-screenshot.png)
-
-The GitHub Actions workflow builds the API and runs 10 unit tests on every push.
+The GitHub Actions workflow builds the API, runs 13 unit tests, and builds the MVC frontend on every push.
 
 ## Video Presentation
 

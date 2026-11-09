@@ -1,41 +1,28 @@
 
-name: CI - Build and Test RaceDay API
+name: CI - Build and Test RaceDay
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - name: Verify Part 1 docs
-        run: |
-          [ -d "docs" ] || (echo "docs folder missing" && exit 1)
-          [ -f "docs/erd.pdf" ] || (echo "ERD missing" && exit 1)
-          [ -f "docs/endpoint-plan.md" ] || (echo "Endpoint Plan missing" && exit 1)
-          [ -f "docs/script.sql" ] || (echo "SQL Script missing" && exit 1)
-          echo "Part 1 docs present"
+      - name: Build API
+        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --configuration Release
 
-      - name: Restore
-        run: dotnet restore RaceDayAPI/RaceDayAPI.csproj
+      - name: Test API
+        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --configuration Release
 
-      - name: Build
-        run: dotnet build RaceDayAPI/RaceDayAPI.csproj --no-restore --configuration Release
-
-      - name: Test
-        run: dotnet test RaceDayAPI.Tests/RaceDayAPI.Tests.csproj --configuration Release --verbosity normal
-
-      - name: Final Success
-        run: echo "All checks passed!"
+      - name: Build MVC Project
+        run: dotnet build RaceDayMVC/RaceDayMVC.csproj --configuration Release
